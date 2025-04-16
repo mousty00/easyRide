@@ -85,13 +85,10 @@ export type userValidation = {
 }
 
 export type userError = {
-  id?: number;
   firstName?: string;
   lastName?: string;
   birthDate?: string;
   taxIdCode?: string;
-  registrationDate?: Date;
-  rides?: number[];
 }
 
 export type customInput = {

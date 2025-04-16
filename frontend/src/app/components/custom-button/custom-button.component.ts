@@ -10,6 +10,7 @@ export class CustomButtonComponent<T> {
   @Input() icon: string = '';
   @Input() object: any;
   @Input() click: ((obj?: any) => void) | null = null;
+  @Input() disabled: boolean = false;
 
   handleClick(): void {
     if (this.click && this.object) {

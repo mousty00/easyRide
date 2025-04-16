@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TaxId {
-    String message() default "";
+    String message() default "Invalid Tax Id Code";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

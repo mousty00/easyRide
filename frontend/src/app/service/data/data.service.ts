@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import Swal from 'sweetalert2';
 import { responseMessage } from '../../../types/types';
@@ -11,6 +11,7 @@ import { responseMessage } from '../../../types/types';
 })
 export class DataService {
   apiUrl = environment.apiUrl;
+  isOptionsRequest: boolean = false;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -21,19 +22,26 @@ export class DataService {
   ): Observable<any> {
     const url = `${this.apiUrl}/${endpoint}`;
     const options = { headers: this.authService.headers };
+    this.isOptionsRequest = httpMethod === this.http.options;
 
     if (body !== undefined) {
       return httpMethod.call(this.http, url, body, options).pipe(
-        catchError((err: HttpResponse<any>) => {
-          console.log('err: ', err);
-          return throwError(() => new Error());
+        catchError((error: HttpErrorResponse) => {
+          return Swal.fire({
+            title: error.error.message,
+            icon: 'error',
+            draggable: true,
+          });
         })
       );
     } else {
       return httpMethod.call(this.http, url, options).pipe(
-        catchError((err: HttpResponse<any>) => {
-          console.log('err: ', err);
-          return throwError(() => new Error());
+        catchError((error: HttpErrorResponse) => {
+          return Swal.fire({
+            title: error.status === 0 ? 'server is down' : error.error.message,
+            icon: 'error',
+            draggable: true,
+          });
         })
       );
     }
@@ -64,12 +72,12 @@ export class DataService {
           response.results.forEach((data: T) => dataList.push(data));
           if (getAge) getAge();
         } else {
-          alert('list empty');
+            Swal.fire({
+                title: 'list empty',
+                icon: 'info',
+                draggable: true,
+              });
         }
-      },
-      error: (error) => {
-        console.error(error);
-        errorMessage = error.message;
       },
     });
   }
@@ -89,17 +97,12 @@ export class DataService {
       if (result.isConfirmed) {
         this.sendRequestData(`${endpoint}`, this.http.delete).subscribe({
           next: (response) => {
-            console.log(response);
-            alert(response.message);
             fetchData?.();
             Swal.fire({
               title: `${name} deleted!`,
               icon: 'success',
               draggable: true,
             });
-          },
-          error: (err) => {
-            Swal.fire('error', `${err.message}`, 'error');
           },
         });
       } else if (result.isDenied) {
@@ -128,13 +131,6 @@ export class DataService {
             Swal.fire({
               title: response.message,
               icon: 'success',
-              draggable: true,
-            });
-          },
-          error: (err) => {
-            Swal.fire({
-              title: err.message,
-              icon: 'error',
               draggable: true,
             });
           },

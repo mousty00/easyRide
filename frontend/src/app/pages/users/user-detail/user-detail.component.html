@@ -2,40 +2,44 @@
   <div class="flex gap-8">
     <section class="flex flex-col gap-4 items-start">
       <app-custom-input
-        [id]="user?.firstName"
-        label="firstName"
         [value]="user?.firstName"
-        [disabled]="!isEditMode"
-        (valueChange)="onInputChange($event, 'firstName')"
+        label="First Name"
+        id="firstName"
+        type="text"
         [hasError]="hasError('firstName')"
-        [error]="validation?.error?.firstName"
-      />
+        [error]="getErrorMessage('firstName')"
+        (valueChange)="onInputChange($event, 'firstName')"
+      ></app-custom-input>
+
       <app-custom-input
-        [id]="user?.lastName"
-        label="last name"
         [value]="user?.lastName"
+        label="Last Name"
+        id="lastName"
         type="text"
-        [disabled]="!isEditMode"
+        [hasError]="hasError('lastName')"
+        [error]="getErrorMessage('lastName')"
         (valueChange)="onInputChange($event, 'lastName')"
-        [error]="validation?.error?.lastName"
-      />
+      ></app-custom-input>
+
       <app-custom-input
-        [id]="user?.birthDate"
-        label="birthDate"
         [value]="user?.birthDate"
+        label="Birth Date"
+        id="birthDate"
         type="date"
-        [disabled]="!isEditMode"
+        [hasError]="hasError('birthDate')"
+        [error]="getErrorMessage('birthDate')"
         (valueChange)="onInputChange($event, 'birthDate')"
-        [error]="validation?.error?.birthDate"
-      />
+      ></app-custom-input>
+
       <app-custom-input
-        [id]="user?.taxIdCode"
-        label="tax id code"
         [value]="user?.taxIdCode"
+        label="Tax ID Code"
+        id="taxIdCode"
         type="text"
-        [disabled]="!isEditMode"
+        [hasError]="hasError('taxIdCode')"
+        [error]="getErrorMessage('taxIdCode')"
         (valueChange)="onInputChange($event, 'taxIdCode')"
-      />
+      ></app-custom-input>
       <p>account created: {{ user?.registrationDate }}</p>
     </section>
     <section>
@@ -52,6 +56,7 @@
           icon="pi-check"
           [object]="user!"
           [click]="saveUser.bind(this)"
+          [disabled]="!isFormValid()"
           *ngIf="isEditMode"
         />
         <app-custom-button

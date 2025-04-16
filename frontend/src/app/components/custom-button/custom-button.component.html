@@ -1,6 +1,10 @@
 <button
-  [class]="background + ' button flex items-center justify-around gap-4' "
+  [class]="
+  disabled ?
+  ' bg-zinc-800 button flex items-center justify-around gap-4'  :
+background + ' button flex items-center justify-around gap-4'"
   (click)="handleClick()"
+  [disabled]="disabled"
 >
   {{ text }}
   <i *ngIf="icon" [ngClass]="'pi ' + icon"></i>

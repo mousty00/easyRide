@@ -15,8 +15,7 @@ export class UserDetailComponent implements OnInit {
   id: string | null = '';
   isEditMode: boolean = false;
   body: bodyUserRequest = {};
-  validation: userValidation | any = {};
-  validationErrors: string[] = [];
+  validation: userValidation = {isValid: true, error: {}};
 
   constructor(
     private userService: DataService,
@@ -49,22 +48,17 @@ export class UserDetailComponent implements OnInit {
               .sendRequestData(`rides/${id}`, this.http.get)
               .subscribe({
                 next: (response) => {
-                  console.log(response)
                   this.user!.rideList!.push(response)
                 },
                 error: (err) => {
                   console.error(err);
-                  alert(err.message);
+                  Swal.fire('Error', err.message, 'error');
                 },
               });
           });
         },
         error: (err) => {
-          Swal.fire(
-            'error',
-            `${err.message}`,
-            'error'
-          )
+          Swal.fire('Error', err.message, 'error');
         },
       });
   }
@@ -79,37 +73,27 @@ export class UserDetailComponent implements OnInit {
   }
 
   mapUserToBody(user?: User) {
-    const sanitizedFirstName = this.body.firstName ?
-      this.validator.sanitizeInput(this.body.firstName) : user?.firstName;
-
-    const sanitizedLastName = this.body.lastName ?
-      this.validator.sanitizeInput(this.body.lastName) : user?.lastName;
-
-    const sanitizedTaxIdCode = this.body.taxIdCode ?
-      this.validator.formatTaxIdCode(this.body.taxIdCode) : user?.taxIdCode;
-
     this.body = {
       id: user?.id,
-      firstName: sanitizedFirstName,
-      lastName: sanitizedLastName,
+      firstName: this.body.firstName ?
+        this.validator.sanitizeInput(this.body.firstName) : user?.firstName,
+      lastName: this.body.lastName ?
+        this.validator.sanitizeInput(this.body.lastName) : user?.lastName,
       birthDate: this.body.birthDate ? this.body.birthDate : user?.birthDate,
-      taxIdCode: sanitizedTaxIdCode,
+      taxIdCode: this.body.taxIdCode ?
+        this.validator.formatTaxIdCode(this.body.taxIdCode) : user?.taxIdCode,
       registrationDate: user?.registrationDate,
       rides: user?.rides
-    }
+    };
   }
 
   saveUser(user?: User) {
     this.mapUserToBody(user);
-
     this.validation = this.validator.validateUser(this.body);
 
-    if (!this.validation.isValid ) {
-      this.validationErrors = this.validation.errors;
+    if (!this.validation.isValid) {
       return;
     }
-
-    this.validationErrors = [];
 
     this.dataService.save(
       `users/update`,
@@ -118,16 +102,42 @@ export class UserDetailComponent implements OnInit {
     );
   }
 
-  onInputChange($event: string | Date, value: string) {
-    // @ts-ignore
-    this.body[value] = $event
-  }
-
   hasError(fieldName: string): boolean {
-     if(this.validation?.error?.[fieldName] == null) {
-        return false;
-     }
-     return true;
+    // @ts-ignore
+    return !!(this.validation?.error && this.validation.error[fieldName]);
   }
 
+  getErrorMessage(fieldName: string): string {
+    // @ts-ignore
+    return this.validation?.error?.[fieldName] || '';
+  }
+
+  isFormValid(): boolean {
+    return this.validation.isValid;
+  }
+
+  onInputChange(value: string, fieldName: 'firstName' | 'lastName' | 'birthDate' | 'taxIdCode') {
+    this.body = {
+      ...this.body,
+      [fieldName]: value
+    };
+
+    this.validateField(fieldName, value);
+  }
+
+  validateField(fieldName: 'firstName' | 'lastName' | 'birthDate' | 'taxIdCode', value: string) {
+    const fieldValidation = this.validator.validateSingleField(fieldName, value, this.body);
+
+    this.validation = {
+      ...this.validation,
+      error: {
+        ...this.validation.error,
+        [fieldName]: fieldValidation.error[fieldName]
+      },
+      isValid: !Object.values({
+        ...this.validation.error,
+        [fieldName]: fieldValidation.error[fieldName]
+      }).some(error => error)
+    };
+  }
 }

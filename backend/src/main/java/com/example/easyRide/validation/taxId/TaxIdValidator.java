@@ -12,14 +12,5 @@ public class TaxIdValidator
         context.buildConstraintViolationWithTemplate("Invalid Tax Id Code").addConstraintViolation();
         return !taxIdCode.isBlank() && taxIdCode.length() == 13;
 
-        // region validazioni avanzate
-
-//        if (!taxIdCode.matches("[0-9]+")) return false;
-//        if (!taxIdCode.matches("[0-9]{13}")) return false;
-//        if (!taxIdCode.matches("[0-9]{11}[0-2][0-9]")) return false;
-//        if (!taxIdCode.matches("[0-9]{11}[0-2][0-9][0-1][0-9]")) return false;
-//        if (!taxIdCode.matches("[0-9]{11}[0-2][0-9][0-1][0-9][0-3][0-9]")) return false;
-        // endregion
-
     }
 }
