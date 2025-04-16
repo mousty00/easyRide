@@ -1,0 +1,35 @@
+<div class="container">
+  <app-search-bar
+    placeholder="search for name ..."
+    [list]="users"
+    searchTopic="firstName"
+    (resultsChanged)="filteredUsers = $event"
+  ></app-search-bar>
+  <div
+    *ngIf="filteredUsers.length > 0"
+    class="flex flex-col gap-4 items-center"
+  >
+    <app-pagination
+      [totalPages]="totalPages"
+      [selectedPage]="selectedPage"
+      [getAll]="getUsers.bind(this)"
+      [hidden]="totalPages.length === 1"
+    >
+    </app-pagination>
+    <section class="flex flex-wrap justify-center items-center gap-6 w-full">
+      <app-card
+        *ngFor="let user of filteredUsers"
+        [title]="user.firstName + ' ' + user.lastName"
+        [id]="user.id!"
+        [object]="user"
+        [delete]="deleteUser.bind(this)"
+        [detailHref]="'/users/' + user.id"
+      >
+        <p class="text-white text-right">age: {{ user.age }}</p>
+      </app-card>
+    </section>
+  </div>
+  <div *ngIf="filteredUsers.length == 0" class="self-center justify-center">
+    <p>not found</p>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="relative w-16 h-8">
+  <input
+    (change)="toggleChanged($event)"
+    [(ngModel)]="isChecked"
+    id="toggle-button-checkbox"
+    type="checkbox"
+    hidden
+  />
+  <label
+    [ngClass]="{ 'left-8': !isChecked, 'left-0': isChecked }"
+    class="absolute top-0 left-0 w-8 h-8 rounded-full cursor-pointer z-10 transition-all duration-300"
+    for="toggle-button-checkbox"
+  ></label>
+  <span
+    [ngClass]="{ 'left-0': !isChecked, 'left-8': isChecked }"
+    class="absolute top-0 left-0 w-8 h-8 bg-white rounded-full cursor-pointer z-10 transition-all duration-300"
+  ></span>
+  <div
+    [ngClass]="{ 'bg-zinc-500': !isChecked, 'bg-violet-500': isChecked }"
+    class="overflow-hidden rounded-3xl shadow-md transition-colors duration-300 h-full"
+  ></div>
+</div>

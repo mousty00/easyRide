@@ -1,0 +1,33 @@
+<div class="container">
+  <app-search-bar
+    placeholder="search for name ..."
+    [list]="drivers"
+    searchTopic="firstName"
+    (resultsChanged)="filteredDrivers = $event"
+  ></app-search-bar>
+  <div
+    *ngIf="filteredDrivers.length > 0"
+    class="flex flex-col gap-4 items-center min-h-screen"
+  >
+    <app-pagination
+      [totalPages]="totalPages"
+      [selectedPage]="selectedPage"
+      [getAll]="getAllDrivers.bind(this)"
+      [hidden]="totalPages.length === 1"
+    ></app-pagination>
+    <section class="flex flex-wrap justify-center items-center gap-6 w-full">
+      <app-card
+        *ngFor="let driver of filteredDrivers"
+        [title]="driver.firstName + ' ' + driver.lastName"
+        [id]="driver.id"
+        [object]="driver"
+        [delete]="deleteDriver.bind(this)"
+      >
+        <p class="text-white text-right">age: {{ driver.age }}</p>
+      </app-card>
+    </section>
+  </div>
+  <div *ngIf="filteredDrivers.length == 0" class="self-center justify-center">
+    <p class="text-4xl">not found</p>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="container mt-20">
+  <div
+    class="max-w-[400px] self-center w-full min-w-[250px] flex flex-col gap-4 items-center justify-center"
+  >
+    <p class="text-3xl">
+      {{ "hi! " + user.firstName + " " + user.lastName }}
+    </p>
+    <p></p>
+    <div class="flex gap-2 w-full max-sm:flex-col">
+      <button class="button bg-zinc-700 flex gap-4 items-center justify-center">
+        <i class="pi pi-pencil"></i>edit profile
+      </button>
+      <button
+        class="button bg-red flex gap-4 items-center justify-center"
+        (click)="logout()"
+      >
+        <i class="pi pi-user"></i>
+        <span>logout</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="container">
+  <app-search-bar
+    placeholder="search for model ..."
+    [list]="vehicles"
+    searchTopic="model"
+    (resultsChanged)="filteredVehicles = $event"
+  ></app-search-bar>
+  <div
+    *ngIf="filteredVehicles.length > 0"
+    class="flex flex-col gap-4 items-center"
+  >
+    <app-pagination
+      [totalPages]="totalPages"
+      [selectedPage]="selectedPage"
+      [getAll]="getAllVehicles.bind(this)"
+      [hidden]="totalPages.length === 1"
+    ></app-pagination>
+    <section class="flex flex-wrap justify-center items-center gap-6 w-full">
+      <app-card
+        *ngFor="let vehicle of filteredVehicles"
+        [title]="vehicle.model"
+        [id]="vehicle.id"
+      >
+        <p class="text-white text-right">color: {{ vehicle.color }}</p>
+        <p class="text-white text-right">
+          plate number: {{ vehicle.plateNumber }}
+        </p>
+      </app-card>
+    </section>
+  </div>
+</div>

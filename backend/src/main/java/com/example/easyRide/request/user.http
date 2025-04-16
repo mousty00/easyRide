@@ -1,0 +1,30 @@
+###
+POST localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "firstName": "Moustapha",
+  "lastName": "Ndiaye"
+}
+
+
+###
+GET localhost:8080/api/users
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsYXN0TmFtZSI6Ik5kaWF5ZSIsInN1YiI6Ik1vdXN0YXBoYSIsImlhdCI6MTc0MzQ5NjQ3OCwiZXhwIjoxNzQzNTMyNDc4fQ.6car8jr1TBgGpSVi8Gs35WfJBGxtj5mM_SkyssWEeOZUaQL0OOOkC6D1exf-2FkI7NkRAZq027LfMSGGkx7-yw
+
+###
+PUT http://localhost:8080/api/users/update
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsYXN0TmFtZSI6Ik5kaWF5ZSIsInN1YiI6Ik1vdXN0YXBoYSIsImlhdCI6MTc0MzQ5NjAxMywiZXhwIjoxNzQzNTMyMDEzfQ._EB1yDGzgpbQuTd7apDcWPOBzhbBDvWVsr1kfqlRJ5Xdfcc0Dq0ixfYyOTdjzBZS_2eWhHCZ3CKaIIssBFIW5Q
+
+{
+  "firstName": "Moustapha",
+  "lastName": "Ndiayeee",
+  "birthDate": "2003-08-17",
+  "taxIdCode": "GSPM98L25E6252",
+  "registrationDate": "2025-03-25",
+  "rides": [],
+  "id":  2
+}
+

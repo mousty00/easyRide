@@ -1,0 +1,18 @@
+<div class="flex gap-4 max-sm:flex-col w-full items-center">
+  <label [for]="id" class="text-lg">{{ label }}</label>
+  <div class="flex flex-col gap-2 items-center">
+    <input
+      [id]="id"
+      [class]="
+        hasError
+          ? 'border px-4 py-2 rounded-xl border-red-500'
+          : 'border px-4 py-2 rounded-xl bg-slate-200'
+      "
+      [type]="type"
+      [value]="value"
+      [disabled]="disabled"
+      (input)="onInputChange($event)"
+    />
+    <p class="text-red-500">{{ error }}</p>
+  </div>
+</div>

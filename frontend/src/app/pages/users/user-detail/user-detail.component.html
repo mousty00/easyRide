@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="flex gap-8">
+    <section class="flex flex-col gap-4 items-start">
+      <app-custom-input
+        [id]="user?.firstName"
+        label="firstName"
+        [value]="user?.firstName"
+        [disabled]="!isEditMode"
+        (valueChange)="onInputChange($event, 'firstName')"
+        [hasError]="hasError('firstName')"
+        [error]="validation?.error?.firstName"
+      />
+      <app-custom-input
+        [id]="user?.lastName"
+        label="last name"
+        [value]="user?.lastName"
+        type="text"
+        [disabled]="!isEditMode"
+        (valueChange)="onInputChange($event, 'lastName')"
+        [error]="validation?.error?.lastName"
+      />
+      <app-custom-input
+        [id]="user?.birthDate"
+        label="birthDate"
+        [value]="user?.birthDate"
+        type="date"
+        [disabled]="!isEditMode"
+        (valueChange)="onInputChange($event, 'birthDate')"
+        [error]="validation?.error?.birthDate"
+      />
+      <app-custom-input
+        [id]="user?.taxIdCode"
+        label="tax id code"
+        [value]="user?.taxIdCode"
+        type="text"
+        [disabled]="!isEditMode"
+        (valueChange)="onInputChange($event, 'taxIdCode')"
+      />
+      <p>account created: {{ user?.registrationDate }}</p>
+    </section>
+    <section>
+      <div class="w-full flex flex-col gap-4">
+        <app-custom-button text="edit" background="bg-black">
+          <app-toggle-button
+            [isChecked]="isEditMode"
+            (changed)="isEditMode = $event"
+          />
+        </app-custom-button>
+        <app-custom-button
+          text="save"
+          background="bg-violet-600"
+          icon="pi-check"
+          [object]="user!"
+          [click]="saveUser.bind(this)"
+          *ngIf="isEditMode"
+        />
+        <app-custom-button
+          text="delete"
+          background="bg-red"
+          icon="pi-trash"
+          [object]="user!"
+          [click]="deleteUser.bind(this)"
+          *ngIf="isEditMode"
+        />
+      </div>
+    </section>
+  </div>
+  <div
+    *ngIf="(user?.rides)!.length > 0"
+    class="flex flex-col items-center gap-8"
+  >
+    <h2 class="text-4xl">Rides:</h2>
+    <section class="flex flex-wrap justify-center items-center gap-6 w-full">
+      <app-card
+        *ngFor="let ride of user?.rideList"
+        [title]="ride.state"
+        [id]="ride.id"
+      >
+        <p class="text-white text-right">from: {{ ride.startDate }}</p>
+        <p class="text-white text-right">to: {{ ride.endDate }}</p>
+      </app-card>
+    </section>
+  </div>
+</div>

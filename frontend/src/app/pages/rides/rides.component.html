@@ -1,0 +1,26 @@
+<div class="container">
+  <app-search-bar
+    placeholder="search for id ride ..."
+    [list]="rides"
+    searchTopic="id"
+    (resultsChanged)="filteredRides = $event"
+  ></app-search-bar>
+  <section class="flex flex-wrap justify-center items-center gap-6 w-full">
+    <app-card
+      *ngFor="let ride of filteredRides"
+      [title]="ride.state"
+      [id]="ride.id"
+      [object]="ride"
+      [delete]="deleteRide.bind(this)"
+    >
+      <p class="text-white text-right">from: {{ ride.startDate }}</p>
+      <p class="text-white text-right">to: {{ ride.endDate }}</p>
+    </app-card>
+  </section>
+  <app-pagination
+    [totalPages]="totalPages"
+    [selectedPage]="selectedPage"
+    [getAll]="getAllRides.bind(this)"
+    [hidden]="totalPages.length === 1"
+  ></app-pagination>
+</div>

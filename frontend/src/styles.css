@@ -1,0 +1,40 @@
+@import "primeicons/primeicons.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  @apply bg-white text-black  p-[1rem];
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  @apply max-w-[100%] gap-[2rem];
+  @apply flex flex-col p-[1rem] items-center mt-20;
+  @apply min-h-screen bg-white text-black;
+}
+
+.button {
+  @apply text-white text-lg text-center p-3 border-none outline-none rounded-xl w-full uppercase;
+}
+
+.bg-blue {
+  @apply bg-blue-700;
+}
+
+.bg-red {
+  @apply bg-red-600;
+}
+
+html,
+body {
+  height: 100%;
+}
+

@@ -1,0 +1,18 @@
+<section
+  class="flex items-center justify-between gap-2 rounded-full border-4 w-fit mx-auto"
+>
+  <input
+    type="text"
+    class="px-4 py-2 mx-4 outline-none"
+    [placeholder]="placeholder"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchTermChange()"
+  />
+  <button
+    class="rounded-full flex items-center justify-center bg-black p-4"
+    type="submit"
+    (click)="onSearchTermChange()"
+  >
+    <i class="pi pi-search" style="color: white; font-weight: bold"></i>
+  </button>
+</section>

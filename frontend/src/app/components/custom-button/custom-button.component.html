@@ -1,0 +1,8 @@
+<button
+  [class]="background + ' button flex items-center justify-around gap-4' "
+  (click)="handleClick()"
+>
+  {{ text }}
+  <i *ngIf="icon" [ngClass]="'pi ' + icon"></i>
+  <ng-content></ng-content>
+</button>

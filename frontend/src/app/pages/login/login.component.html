@@ -1,0 +1,32 @@
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="max-w-[300px] w-full flex flex-col justify-center mx-auto gap-[1.5rem]">
+    <div *ngFor="let item of formItems">
+      <div *ngIf="item.input" class="flex-col flex items-center gap-4">
+        <div class="flex gap-4 items-center">
+          <i [class]="'pi ' + item.icon" style="font-size: 1.2rem; color: black"></i>
+          <label [for]="item.id" class="text-xl">{{ item.label }}</label>
+        </div>
+        <input [id]="item.id"
+               [formControlName]="item.label"
+               [type]="item.type"
+               class="bg-[#F0F0F0] text-black text-lg text-center p-2 border-none outline-none rounded-xl w-full"/>
+      </div>
+      <div *ngIf="!item.input">
+        <button [id]="item.id"
+                [type]="item.type"
+                formControlName="password"
+                class="bg-blue-700 text-white text-lg text-center p-3 border-none outline-none rounded-xl w-full uppercase">
+          {{ item.label }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="text-red-500 text-center">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="loading" class="text-center">
+      Loading...
+    </div>
+  </form>
+</div>
