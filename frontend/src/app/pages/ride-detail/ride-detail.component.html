@@ -1,0 +1,83 @@
+<div class="container">
+  <section class="flex gap-4">
+    <div class="flex flex-col gap-4 items-start">
+      <div class="flex gap-4 items-center">
+        <div *ngIf="isEditMode">
+          <p class="text-lg">status</p>
+          <select class="px-4 py-2 rounded-xl">
+            <option [value]="ride?.state">{{ ride?.state }}</option>
+            <option value="completed" [hidden]="ride?.state === 'completed'" class="bg-green-500">completed</option>
+            <option value="cancelled" [hidden]="ride?.state === 'cancelled'">cancelled</option>
+            <option value="pending" [hidden]="ride?.state === 'pending'">pending</option>
+            <option value="in-progress" [hidden]="ride?.state === 'in-progress'">in-progress</option>
+          </select>
+        </div>
+        <div *ngIf="!isEditMode" class="flex gap-4 items-center">
+          <p class="text-lg">status: </p>
+          <p [class]="'text-right text-xl flex items-center gap-2 ' +
+          (ride?.state === 'completed' ? 'text-green-500' :
+          ride?.state === 'cancelled' ? 'text-red-500' :
+          ride?.state=== 'in-progress' ? 'text-yellow-300' : 'text-black')"
+          >
+            <i class="pi pi-circle-fill"></i>
+            {{ ride?.state }}
+          </p>
+        </div>
+
+      </div>
+      <app-custom-input
+        [value]="''+ride?.price"
+        label="price"
+        id="price"
+        type="number"
+        [disabled]="!isEditMode"
+      ></app-custom-input>
+      <app-custom-input
+        [value]="''+ride?.startDate"
+        label="start date"
+        id="startDate"
+        type="date"
+        [disabled]="!isEditMode"
+      ></app-custom-input>
+      <app-custom-input
+        [value]="''+ride?.endDate"
+        label="end date"
+        id="endDate"
+        type="date"
+        [disabled]="!isEditMode"
+      ></app-custom-input>
+      <app-custom-input
+        [value]="''+ride?.distance"
+        label="distance"
+        id="distance"
+        type="number"
+        [disabled]="!isEditMode"
+      ></app-custom-input>
+    </div>
+    <div class="w-full flex flex-col gap-4">
+      <app-custom-button text="edit" background="bg-black">
+        <app-toggle-button
+          [isChecked]="isEditMode"
+          (changed)="isEditMode = $event"
+        />
+      </app-custom-button>
+      <!--    <app-custom-button-->
+      <!--      text="save"-->
+      <!--      background="bg-violet-600"-->
+      <!--      icon="pi-check"-->
+      <!--      [object]="user!"-->
+      <!--      [click]="saveUser.bind(this)"-->
+      <!--      [disabled]="!isFormValid()"-->
+      <!--      *ngIf="isEditMode"-->
+      <!--    />-->
+      <!--    <app-custom-button-->
+      <!--      text="delete"-->
+      <!--      background="bg-red"-->
+      <!--      icon="pi-trash"-->
+      <!--      [object]="user!"-->
+      <!--      [click]="deleteUser.bind(this)"-->
+      <!--      *ngIf="isEditMode"-->
+      <!--    />-->
+    </div>
+  </section>
+</div>

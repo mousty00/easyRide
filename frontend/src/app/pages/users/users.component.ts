@@ -46,7 +46,6 @@ export class UsersComponent implements OnInit {
     );
     this.filteredUsers = this.users;
 
-
   }
 
   deleteUser(user?: User) {

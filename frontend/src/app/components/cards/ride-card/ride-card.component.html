@@ -1,0 +1,28 @@
+<div class="flex flex-col gap-6 items-center">
+  <div [class]="'text-right text-xl flex items-center gap-2 ' +
+  (ride.state === 'completed' ? 'text-green-500' :
+   ride.state === 'cancelled' ? 'text-red-500' :
+   ride.state === 'in-progress' ? 'text-yellow-300' : 'text-white')">
+    <i class="pi pi-circle-fill"></i>
+    <span [class]="ride.state === 'cancelled' ? 'line-through' : ''">{{ ride.state }}</span>
+  </div>
+  <p class="text-white text-right text-4xl">{{ ride.price }} €</p>
+  <div class="flex flex-col gap-2">
+    <a class="flex gap-4 items-center text-white" [href]="">
+      <i class="pi pi-car rounded-full bg-zinc-800 p-2 "></i>
+      <span>{{ ride.vehicle?.model }}</span>
+    </a>
+    <a class="flex gap-4 items-center text-white" [href]="">
+      <i class="pi pi-id-card rounded-full bg-zinc-800 p-2 "></i>
+      <span>{{ ride.driver?.firstName + ' ' + ride.driver?.lastName }}</span>
+    </a>
+    <p class="flex gap-4 items-center text-white"><i
+      class="pi pi-map bg-zinc-800 p-2 rounded-full"></i> {{ ride.distance }} km</p>
+  </div>
+    <p class="flex items-center gap-2 text-white">
+      <span>{{ ride.startDate }}</span>
+      <i class="pi pi-arrow-right bg-zinc-800 p-2 rounded-full"></i>
+      <span>{{ ride.endDate }}</span>
+    </p>
+</div>
+

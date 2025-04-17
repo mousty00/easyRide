@@ -1,21 +1,34 @@
 <div class="container">
   <app-search-bar
-    placeholder="search for id ride ..."
+    placeholder="search for ride id ..."
     [list]="rides"
     searchTopic="id"
     (resultsChanged)="filteredRides = $event"
   ></app-search-bar>
-  <section class="flex flex-wrap justify-center items-center gap-6 w-full">
-    <app-card
-      *ngFor="let ride of filteredRides"
-      [title]="ride.state"
-      [id]="ride.id"
-      [object]="ride"
-      [delete]="deleteRide.bind(this)"
-    >
-      <p class="text-white text-right">from: {{ ride.startDate }}</p>
-      <p class="text-white text-right">to: {{ ride.endDate }}</p>
-    </app-card>
+  <section class="flex flex-wrap justify-center items-center gap-4 w-full">
+    <div *ngFor="let ride of filteredRides" class="m-4 flex flex-col gap-4">
+      <app-card
+        [id]="ride.id"
+        [object]="ride"
+        [delete]="deleteRide.bind(this)"
+        [editable]="editable"
+        [detailHref]="'/rides/'+ride.id"
+      >
+        <app-ride-card [ride]="ride" />
+      </app-card>
+      <div class="flex justify-around">
+        <a class="flex items-center gap-2 self-center" [href]="'/users/'+ride.idUser">
+          <i class="pi pi-user bg-violet-700 p-2 rounded-full text-white"></i>
+          <span class="text-lg text-center">{{ride.user?.firstName +' '+ ride.user?.lastName}}</span>
+        </a>
+        <a class="flex items-center gap-2 self-center" [href]="'/drivers/'+ride.idDriver">
+          <i class="pi pi-id-card bg-pink-500 p-2 rounded-full text-white"></i>
+          <span class="text-lg text-center">{{ride.driver?.firstName +' '+ ride.driver?.lastName}}</span>
+        </a>
+      </div>
+    </div>
+
+
   </section>
   <app-pagination
     [totalPages]="totalPages"

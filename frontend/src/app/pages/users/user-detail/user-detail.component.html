@@ -9,6 +9,7 @@
         [hasError]="hasError('firstName')"
         [error]="getErrorMessage('firstName')"
         (valueChange)="onInputChange($event, 'firstName')"
+        [disabled]="!isEditMode"
       ></app-custom-input>
 
       <app-custom-input
@@ -19,6 +20,7 @@
         [hasError]="hasError('lastName')"
         [error]="getErrorMessage('lastName')"
         (valueChange)="onInputChange($event, 'lastName')"
+        [disabled]="!isEditMode"
       ></app-custom-input>
 
       <app-custom-input
@@ -29,6 +31,7 @@
         [hasError]="hasError('birthDate')"
         [error]="getErrorMessage('birthDate')"
         (valueChange)="onInputChange($event, 'birthDate')"
+        [disabled]="!isEditMode"
       ></app-custom-input>
 
       <app-custom-input
@@ -39,6 +42,7 @@
         [hasError]="hasError('taxIdCode')"
         [error]="getErrorMessage('taxIdCode')"
         (valueChange)="onInputChange($event, 'taxIdCode')"
+        [disabled]="!isEditMode"
       ></app-custom-input>
       <p>account created: {{ user?.registrationDate }}</p>
     </section>
@@ -78,11 +82,10 @@
     <section class="flex flex-wrap justify-center items-center gap-6 w-full">
       <app-card
         *ngFor="let ride of user?.rideList"
-        [title]="ride.state"
         [id]="ride.id"
+        [editable]="false"
       >
-        <p class="text-white text-right">from: {{ ride.startDate }}</p>
-        <p class="text-white text-right">to: {{ ride.endDate }}</p>
+        <app-ride-card [ride]="ride" />
       </app-card>
     </section>
   </div>

@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -11,4 +12,11 @@ export class CardComponent<T> {
     @Input() delete! : (object?: T) => void;
     @Input() edit! : (object?: T) => void;
     @Input() detailHref: string = ""
+    @Input() editable: boolean = true;
+
+    constructor(private router: Router){}
+
+    navigateTo(href: string) {
+        this.router.navigate([href])
+    }
 }

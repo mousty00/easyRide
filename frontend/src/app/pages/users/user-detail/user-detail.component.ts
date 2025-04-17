@@ -5,6 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UserValidatorService} from 'src/app/service/validator/user-validator.service';
 import Swal from 'sweetalert2';
+import {emitDistinctChangesOnlyDefaultValue} from "@angular/compiler";
+import {UserService} from "../../../service/user/user.service";
 
 @Component({
   selector: 'app-user-detail',
@@ -16,9 +18,10 @@ export class UserDetailComponent implements OnInit {
   isEditMode: boolean = false;
   body: bodyUserRequest = {};
   validation: userValidation = {isValid: true, error: {}};
+  loading: boolean = false;
 
   constructor(
-    private userService: DataService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private http: HttpClient,
     private dataService: DataService,
@@ -34,7 +37,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUserById(): void {
-    this.userService
+    this.dataService
       .sendRequestData(`users/${this.id}`, this.http.get)
       .subscribe({
         next: (response) => {
@@ -42,13 +45,21 @@ export class UserDetailComponent implements OnInit {
           if (!this.user?.rideList) {
             this.user!.rideList = [];
           }
-          this.user!.age = this.userService.age(this.user!.birthDate!)
+          this.user!.age = this.dataService.age(this.user!.birthDate!)
           this.user?.rides!.forEach((id) => {
-            this.userService
+            this.dataService
               .sendRequestData(`rides/${id}`, this.http.get)
               .subscribe({
                 next: (response) => {
                   this.user!.rideList!.push(response)
+                  this.user?.rideList?.forEach((ride) => {
+                    this.dataService.sendRequestData(`drivers/${ride.idDriver}`, this.http.get).subscribe({
+                      next: (response)=> {
+                        ride.driver = response;
+                      }
+                    })
+                    }
+                  )
                 },
                 error: (err) => {
                   console.error(err);
@@ -56,10 +67,7 @@ export class UserDetailComponent implements OnInit {
                 },
               });
           });
-        },
-        error: (err) => {
-          Swal.fire('Error', err.message, 'error');
-        },
+        }
       });
   }
 
@@ -140,4 +148,6 @@ export class UserDetailComponent implements OnInit {
       }).some(error => error)
     };
   }
+
+  protected readonly emitDistinctChangesOnlyDefaultValue = emitDistinctChangesOnlyDefaultValue;
 }

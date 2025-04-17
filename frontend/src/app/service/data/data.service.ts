@@ -11,7 +11,6 @@ import { responseMessage } from '../../../types/types';
 })
 export class DataService {
   apiUrl = environment.apiUrl;
-  isOptionsRequest: boolean = false;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -22,7 +21,6 @@ export class DataService {
   ): Observable<any> {
     const url = `${this.apiUrl}/${endpoint}`;
     const options = { headers: this.authService.headers };
-    this.isOptionsRequest = httpMethod === this.http.options;
 
     if (body !== undefined) {
       return httpMethod.call(this.http, url, body, options).pipe(

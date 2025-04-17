@@ -22,6 +22,13 @@ export type Ride = {
   distance: number;
   startDate: Date;
   endDate: Date;
+  idUser: number;
+  price: number;
+  idDriver: number;
+  idVehicle: number;
+  user?: User;
+  driver?: Driver;
+  vehicle?: Vehicle;
 };
 
 export type User = {

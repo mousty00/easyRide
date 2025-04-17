@@ -53,8 +53,8 @@ export class UserValidatorService {
     if (!user.taxIdCode || user.taxIdCode.trim() === '') {
       error.taxIdCode = 'Tax ID Code is required';
       isValid = false;
-    } else if (user.taxIdCode.length < 9 || user.taxIdCode.length > 16) {
-      error.taxIdCode = 'Tax ID Code must be between 9 and 16 characters';
+    } else if (user.taxIdCode.length !== 13) {
+      error.taxIdCode = 'Tax ID Code must be 13 characters';
       isValid = false;
     }
 
@@ -122,8 +122,8 @@ export class UserValidatorService {
         if (!value || value.trim() === '') {
           error.taxIdCode = 'Tax ID Code is required';
           isValid = false;
-        } else if (value.length < 9 || value.length > 16) {
-          error.taxIdCode = 'Tax ID Code must be between 9 and 16 characters';
+        } else if (value.length !== 13) {
+          error.taxIdCode = 'Tax ID Code must be 13 characters';
           isValid = false;
         }
         break;

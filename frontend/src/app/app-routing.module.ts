@@ -9,6 +9,7 @@ import {UsersComponent} from './pages/users/users.component';
 import {DriversComponent} from './pages/drivers/drivers/drivers.component';
 import {VehiclesComponent} from './pages/vehicles/vehicles/vehicles.component';
 import {UserDetailComponent} from './pages/users/user-detail/user-detail.component';
+import {RideDetailComponent} from "./pages/ride-detail/ride-detail.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: "home", redirectTo: "", pathMatch: "full"},
   {path: "profile", component: ProfileComponent },
   {path: "rides", component: RidesComponent },
+  {path: "rides/:id", component: RideDetailComponent },
   {path: "users", component: UsersComponent },
   {path: "users/:id", component:  UserDetailComponent},
   {path: "drivers", component: DriversComponent },
