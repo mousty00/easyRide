@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {bodyUserRequest, Ride, User, Vehicle} from "../../../types/types";
+import {Ride} from "../../../types/types";
 import {HttpClient} from "@angular/common/http";
 import {DataService} from "../../service/data/data.service";
 import {UserService} from "../../service/user/user.service";
