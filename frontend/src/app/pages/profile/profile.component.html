@@ -2,10 +2,10 @@
   <div
     class="max-w-[400px] self-center w-full min-w-[250px] flex flex-col gap-4 items-center justify-center"
   >
-    <p class="text-3xl">
-      {{ "hi! " + user.firstName + " " + user.lastName }}
-    </p>
-    <p></p>
+    <div class="flex items-center gap-2">
+      <i class="pi  pi-user rounded-full text-white bg-violet-600 p-8 text-6xl"></i>
+      <span class="text-3xl">{{ user.firstName + " " + user.lastName }}</span>
+    </div>
     <div class="flex gap-2 w-full max-sm:flex-col">
       <button class="button bg-zinc-700 flex gap-4 items-center justify-center">
         <i class="pi pi-pencil"></i>edit profile
